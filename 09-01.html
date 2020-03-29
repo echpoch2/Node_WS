@@ -1,0 +1,41 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            var socket;
+            let k=0;
+            let id;
+            function startWS(){
+                socket = new WebSocket('ws:/localhost:4000/wsserver');
+                socket.onopen = ()=>{console.log('socket.onopen')
+                socket.send("I"+id);
+            };
+            let info = document.getElementById("info");
+            let msg = document.getElementById("msg");
+            socket.onmessage=(e)=>{
+                if(e.data[0]!="M")
+                info.innerHTML=e.data
+                else
+                msg.innerHTML=e.data;
+            };
+            var now = new Date();
+            id = now.getMilliseconds();
+            }
+            function sendMSG(){
+                socket.send("Пришло сообщение от "+ "I"+id);
+            }
+        </script>
+        <button onclick="startWS()">startWS</button>
+        <button onclick="sendMSG()">Отправить сообщение</button>>
+        <br>
+        Подключенные клиенты:
+        <div id="info">
+
+        </div>
+        <div id="msg">
+            
+        </div>
+    </body>
+</html>
