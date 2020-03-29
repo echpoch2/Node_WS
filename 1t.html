@@ -1,0 +1,19 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            let k=0;
+            function startWS(){
+               let socket = new WebSocket('ws:/localhost:4000/wsserver');
+                socket.onopen = ()=>{console.log('socket.onopen')
+                   setInterval(()=>{socket.send(++k);},1000)
+               
+            };
+           socket.onmessage=(e)=>{console.log('socket message', e.data)};
+            }
+        </script>
+        <button onclick="startWS()">startWS</button>
+    </body>
+</html>
